@@ -32,7 +32,7 @@
               propName  = propSelect.MPPropertySelect('value'),
               dateRange = dateSelect.MPDatepicker('value');
 
-          if (eventName && propName) {
+          if (eventName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
               processResults(data);
