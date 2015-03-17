@@ -30,7 +30,7 @@
         
         var options = {
           items: [
-            {label: '-- Select number of slices --', value: 1},
+            {label: '-- Select number of slices --', value: 0},
             {label: '1', value: 1},
             {label: '2', value: 2},
             {label: '3', value: 3},
@@ -62,7 +62,7 @@
               dateRange = dateSelect.MPDatepicker('value'),
               slices = slicesPicker.MPSelect('value');
 
-          if (eventName && propName) {
+          if (eventName && propName && slices > 0) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
               processResults(data, slices);
