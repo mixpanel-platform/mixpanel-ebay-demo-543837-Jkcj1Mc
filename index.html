@@ -73,6 +73,7 @@
             }
             totals[keys[i]] = total;
           }
+          console.log(totals);
           for(i=0; i<slices; i++){
               var max_key = _.invert(totals)[_.max(totals)];
               adjustedResults[max_key] = data[max_key];
