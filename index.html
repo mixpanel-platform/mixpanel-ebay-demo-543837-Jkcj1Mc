@@ -25,16 +25,25 @@
           showPercentages: true,
           firstColHeader: 'Event'
         });
+        var slices = 10;
 
         var runQuery = function() {
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
               dateRange = dateSelect.MPDatepicker('value');
+              
+          var adjustedResults = {};
 
           if (eventName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
-              eventGraph.MPChart('setData', results);
-              eventTable.MPTable('setData', results);
+              var data = results.values();
+              for(i=0; i<slices; i++){
+                var max_key = _.invert(data)[_.max(data)];
+                var max_name = _.invert(data)[max_key];
+                adjustedResults[max_name] = mak_key;
+              }
+              eventGraph.MPChart('setData', adjustedResults);
+              eventTable.MPTable('setData', adjustedResults);
             });
           }
         };
