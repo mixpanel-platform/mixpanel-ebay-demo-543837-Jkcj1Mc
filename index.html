@@ -53,12 +53,12 @@
           if (eventName && propName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
-              processResults(data);
+              processResults(data, slices);
             });
           }
         };
         
-        var processResults = function(data) {
+        var processResults = function(data, slices) {
           var adjustedResults = {};
           var totals = {};
           var other = 0;
