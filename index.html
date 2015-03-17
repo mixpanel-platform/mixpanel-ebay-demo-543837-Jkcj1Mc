@@ -44,10 +44,10 @@
           var adjustedResults = {};
           var totals = {};
           var other = 0;
-          var keys = data.keys();
+          var keys = Object.keys(data);
           for(i=0; i<keys.length; i++){
             var current_results = data[keys[i]];
-            var current_keys = current_results.keys();
+            var current_keys = Object.keys(current_results);
             var total = 0;
             for(j=0; j<current_keys.length; j++){
               total += current_results[current_keys[j]];
