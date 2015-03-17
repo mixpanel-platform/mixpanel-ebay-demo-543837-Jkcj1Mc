@@ -90,7 +90,7 @@
               var subkeys = Object.keys(dates);
               for(j=0; j<subkeys.length; j++){
                 console.log(subkeys[j]);
-                other[subkeys[j]] += dates[subkeys[j]];
+                other[subkeys[j]] += parseInt(dates[subkeys[j]]);
               }
               console.log(other);
               delete data[key_val];
