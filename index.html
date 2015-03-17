@@ -86,7 +86,9 @@
               delete data[key_val];
               delete totals[key_val];
           }
-          adjustedResults['Other'] = other;
+          if(slices > 0){
+            adjustedResults['Other'] = other;
+          }
           eventGraph.MPChart('setData', adjustedResults);
           eventTable.MPTable('setData', adjustedResults);
         }
