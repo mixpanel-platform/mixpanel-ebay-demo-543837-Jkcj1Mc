@@ -18,7 +18,7 @@
     <script>
       MP.api.ready(function() {
         var eventSelect = $('#eventSelect').MPEventSelect();
-        var propSelect  = $('#propSelect').MPPropertySelect();
+        var propSelect  = $('#propSelect').MPPropertySelect('setEvent', eventName);
         var dateSelect  = $('#dateSelect').MPDatepicker();
         var eventGraph  = $('#graph').MPChart({chartType: 'pie'});
         var eventTable  = $('#table').MPTable({
@@ -32,7 +32,7 @@
               propName  = propSelect.MPPropertySelect('value'),
               dateRange = dateSelect.MPDatepicker('value');
 
-          if (eventName) {
+          if (eventName && propName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
               processResults(data);
@@ -74,8 +74,8 @@
         }
         
         eventSelect.on('change', function(e, eventName) {
-          propSelect.MPPropertySelect('setEvent', eventName);
-          $("#by").show();
+          //propSelect.MPPropertySelect('setEvent', eventName);
+          //$("#by").show();
           runQuery();
         });
         
