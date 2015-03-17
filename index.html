@@ -38,7 +38,8 @@
           if (eventName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               var data = results.values();
-              for(i=0; i<slices; i++){
+            });
+            for(i=0; i<slices; i++){
                 var max_key = _.invert(data)[_.max(data)];
                 adjustedResults[max_key] = data[max_key];
                 delete data[max_key];
@@ -51,7 +52,6 @@
               adjustedResults['Other'] = other;
               eventGraph.MPChart('setData', adjustedResults);
               eventTable.MPTable('setData', adjustedResults);
-            });
           }
         };
         eventSelect.on('change', function(e, eventName) {
