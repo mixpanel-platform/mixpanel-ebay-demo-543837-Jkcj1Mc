@@ -74,22 +74,31 @@
             totals[keys[i]] = total;
           }
           console.log(totals);
-          for(i=0; i<slices; i++){
+          var totals_keys = Object.keys(totals);
+          if(slices < totals_keys.length){
+            for(i=0; i<slices; i++){
               var max_key = _.invert(totals)[_.max(totals)];
               adjustedResults[max_key] = data[max_key];
               delete data[max_key];
               delete totals[max_key];
-          }
-          console.log(totals.length);
-          for(i=slices; i<totals.length; i++){
+            }
+            for(i=slices; i<totals_keys.length; i++){
               var key_val = _.invert(totals)[_.max(totals)];
               other += data[key_val];
               delete data[key_val];
               delete totals[key_val];
-              console.log(other);
+            }
+            if(slices > 0){
+              adjustedResults['Other'] = other;
+            }
           }
-          if(slices > 0){
-            adjustedResults['Other'] = other;
+          else{
+            for(i=0; i<totals_keys.length; i++){
+              var max_key = _.invert(totals)[_.max(totals)];
+              adjustedResults[max_key] = data[max_key];
+              delete data[max_key];
+              delete totals[max_key];
+            }
           }
           eventGraph.MPChart('setData', adjustedResults);
           eventTable.MPTable('setData', adjustedResults);
