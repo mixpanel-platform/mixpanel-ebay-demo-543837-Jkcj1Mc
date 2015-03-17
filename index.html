@@ -72,19 +72,19 @@
             }
             totals[keys[i]] = total;
           }
-          console.log(totals);
           for(i=0; i<slices; i++){
               var max_key = _.invert(totals)[_.max(totals)];
               adjustedResults[max_key] = data[max_key];
               delete data[max_key];
               delete totals[max_key];
-              console.log(adjustedResults);
           }
+          console.log(totals.length);
           for(i=slices; i<totals.length; i++){
               var key_val = _.invert(totals)[_.max(totals)];
               other += data[key_val];
               delete data[key_val];
               delete totals[key_val];
+              console.log(other);
           }
           if(slices > 0){
             adjustedResults['Other'] = other;
