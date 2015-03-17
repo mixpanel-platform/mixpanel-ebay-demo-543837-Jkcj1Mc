@@ -39,11 +39,13 @@
           if (eventName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
+              console.log(data);
             });
             for(i=0; i<slices; i++){
                 var max_key = _.invert(data)[_.max(data)];
                 adjustedResults[max_key] = data[max_key];
                 delete data[max_key];
+                console.log(adjustedResults);
             }
             for(i=slices; i<data.length; i++){
                 var key_val = _.invert(data)[_.max(data)];
