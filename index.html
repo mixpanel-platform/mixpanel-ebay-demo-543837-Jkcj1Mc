@@ -73,7 +73,6 @@
             }
             totals[keys[i]] = total;
           }
-          console.log(totals);
           var totals_keys = Object.keys(totals);
           if(slices < totals_keys.length){
             for(i=0; i<slices; i++){
@@ -89,6 +88,7 @@
               for(j=0; j<subkeys.length; j++){
                 other[subkeys[j]] += dates[subkeys[j]];
               }
+              console.log(other);
               delete data[key_val];
               delete totals[key_val];
             }
