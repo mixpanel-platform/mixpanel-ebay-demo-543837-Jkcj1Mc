@@ -35,7 +35,6 @@
           if (eventName && propName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
-              console.log(data);
               processResults(data);
             });
           }
@@ -43,21 +42,35 @@
         
         var processResults = function(data) {
           var adjustedResults = {};
+          var totals = {};
           var other = 0;
+          var keys = data.keys();
+          for(i=0; i<keys.length; i++){
+            var current_results = data[keys[i]];
+            var current_keys = current_results.keys();
+            var total = 0;
+            for(j=0; j<current_keys.length; j++){
+              total += current_results[current_keys[j]];
+            }
+            totals[keys[i]] = total;
+          }
+          console.log(totals);
           for(i=0; i<slices; i++){
-                var max_key = _.invert(data)[_.max(data)];
-                adjustedResults[max_key] = data[max_key];
-                delete data[max_key];
-                console.log(adjustedResults);
-            }
-            for(i=slices; i<data.length; i++){
-                var key_val = _.invert(data)[_.max(data)];
-                other += data[key_val];
-                delete data[key_val];
-            }
-            adjustedResults['Other'] = other;
-            eventGraph.MPChart('setData', adjustedResults);
-            eventTable.MPTable('setData', adjustedResults);
+              var max_key = _.invert(totals)[_.max(totals)];
+              adjustedResults[max_key] = data[max_key];
+              delete data[max_key];
+              delete totals[max_key];
+              console.log(adjustedResults);
+          }
+          for(i=slices; i<totals.length; i++){
+              var key_val = _.invert(totals)[_.max(totals)];
+              other += data[key_val];
+              delete data[key_val];
+              delete totals[key_val];
+          }
+          adjustedResults['Other'] = other;
+          eventGraph.MPChart('setData', adjustedResults);
+          eventTable.MPTable('setData', adjustedResults);
         }
         
         eventSelect.on('change', function(e, eventName) {
