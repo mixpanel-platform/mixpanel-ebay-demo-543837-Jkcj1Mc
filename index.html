@@ -62,7 +62,7 @@
         var processResults = function(data, slices) {
           var adjustedResults = {};
           var totals = {};
-          var other = 0;
+          var other = {};
           var keys = Object.keys(data);
           for(i=0; i<keys.length; i++){
             var current_results = data[keys[i]];
@@ -84,13 +84,15 @@
             }
             for(i=slices; i<totals_keys.length; i++){
               var key_val = _.invert(totals)[_.max(totals)];
-              other += data[key_val];
+              var dates = data[key_val];
+              var subkeys = Object.keys(dates);
+              for(j=0; j<subkeys.length; j++){
+                other[subkeys[j]] += dates[subkeys[j]];
+              }
               delete data[key_val];
               delete totals[key_val];
             }
-            if(slices > 0){
-              adjustedResults['Other'] = other;
-            }
+            adjustedResults['Other'] = other;
           }
           else{
             for(i=0; i<totals_keys.length; i++){
