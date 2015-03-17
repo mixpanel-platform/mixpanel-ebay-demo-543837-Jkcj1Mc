@@ -33,15 +33,22 @@
               dateRange = dateSelect.MPDatepicker('value');
               
           var adjustedResults = {};
+          var other = 0;
 
           if (eventName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               var data = results.values();
               for(i=0; i<slices; i++){
                 var max_key = _.invert(data)[_.max(data)];
-                var max_name = _.invert(data)[max_key];
-                adjustedResults[max_name] = mak_key;
+                adjustedResults[max_key] = data[max_key];
+                delete data[max_name];
               }
+              for(i=slices; i<data.length; i++){
+                var key_val = _.invert(data)[_.max(data)];
+                other += data[key_val];
+                delete data[key_val];
+              }
+              adjustedResults['Other'] = other;
               eventGraph.MPChart('setData', adjustedResults);
               eventTable.MPTable('setData', adjustedResults);
             });
