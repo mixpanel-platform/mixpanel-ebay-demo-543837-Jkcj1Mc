@@ -41,7 +41,7 @@
               for(i=0; i<slices; i++){
                 var max_key = _.invert(data)[_.max(data)];
                 adjustedResults[max_key] = data[max_key];
-                delete data[max_name];
+                delete data[max_key];
               }
               for(i=slices; i<data.length; i++){
                 var key_val = _.invert(data)[_.max(data)];
