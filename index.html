@@ -31,17 +31,20 @@
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
               dateRange = dateSelect.MPDatepicker('value');
-              
-          var adjustedResults = {};
-          var other = 0;
-          var data = {};
 
-          if (eventName) {
+          if (eventName && propName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
               console.log(data);
+              processResults(data);
             });
-            for(i=0; i<slices; i++){
+          }
+        };
+        
+        var processResults = function(data) {
+          var adjustedResults = {};
+          var other = 0;
+          for(i=0; i<slices; i++){
                 var max_key = _.invert(data)[_.max(data)];
                 adjustedResults[max_key] = data[max_key];
                 delete data[max_key];
@@ -55,14 +58,16 @@
             adjustedResults['Other'] = other;
             eventGraph.MPChart('setData', adjustedResults);
             eventTable.MPTable('setData', adjustedResults);
-          }
-        };
+        }
+        
         eventSelect.on('change', function(e, eventName) {
           propSelect.MPPropertySelect('setEvent', eventName);
           $("#by").show();
           runQuery();
         });
+        
         propSelect.on('change', runQuery);
+        
         dateSelect.on('change', runQuery);
       });
     </script>
