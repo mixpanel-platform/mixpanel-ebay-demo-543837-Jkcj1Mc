@@ -11,6 +11,7 @@
       <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
       <div id="propSelect" style="float: left;"></div>
       <div id="dateSelect" style="float: right;"></div>
+      <div id="sliceSelect" style="float: right;"></div>
       <div style="clear: both;"></div>
       <div id="graph"></div>
     </div>
@@ -25,12 +26,27 @@
           showPercentages: true,
           firstColHeader: 'Event'
         });
-        var slices = 20;
+        
+        var options = {
+          {label: '1', value: 1},
+          {label: '2', value: 2},
+          {label: '3', value: 3},
+          {label: '4', value: 4},
+          {label: '5', value: 5},
+          {label: '6', value: 6},
+          {label: '7', value: 7},
+          {label: '8', value: 8},
+          {label: '9', value: 9},
+          {label: '10', value: 10}
+        }
+        
+        var slicesPicker = $('#sliceSelect').MPSelect(options);
 
         var runQuery = function() {
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
-              dateRange = dateSelect.MPDatepicker('value');
+              dateRange = dateSelect.MPDatepicker('value'),
+              slices = slicesPicker.MPSelect('value');
 
           if (eventName && propName) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
@@ -74,14 +90,17 @@
         }
         
         eventSelect.on('change', function(e, eventName) {
-          //propSelect.MPPropertySelect('setEvent', eventName);
-          //$("#by").show();
+          propSelect.MPPropertySelect('setEvent', eventName);
+          $("#by").show();
           runQuery();
         });
         
         propSelect.on('change', runQuery);
         
         dateSelect.on('change', runQuery);
+        
+        slicesPicker.on('change', runQuery);
+        
       });
     </script>
   </body>
