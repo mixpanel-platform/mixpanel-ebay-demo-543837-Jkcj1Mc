@@ -64,8 +64,9 @@
 
           if (eventName && propName && slices > 0) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
-              console.log(results);
               data = results.values();
+              console.log(results);
+              console.log(data);
               processResults(data, slices);
             });
           }
