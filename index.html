@@ -64,6 +64,7 @@
 
           if (eventName && propName && slices > 0) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
+              console.log(results);
               data = results.values();
               processResults(data, slices);
             });
@@ -100,10 +101,8 @@
               var dates = data[key_val];
               var subkeys = Object.keys(dates);
               for(j=0; j<subkeys.length; j++){
-                console.log(subkeys[j]);
                 other[subkeys[j]] += parseInt(dates[subkeys[j]]);
               }
-              console.log(other);
               delete data[key_val];
               delete totals[key_val];
             }
