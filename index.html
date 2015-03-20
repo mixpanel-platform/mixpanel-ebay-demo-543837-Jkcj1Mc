@@ -65,8 +65,6 @@
           if (eventName && propName && slices > 0) {
             MP.api.segment(eventName, propName, dateRange).done(function(results) {
               data = results.values();
-              console.log(results);
-              console.log(data);
               processResults(data, slices);
             });
           }
@@ -117,6 +115,7 @@
               delete totals[max_key];
             }
           }
+          console.log(adjustedResults);
           eventGraph.MPChart('setData', adjustedResults);
           eventTable.MPTable('setData', adjustedResults);
         }
